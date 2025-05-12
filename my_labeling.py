@@ -8,12 +8,23 @@ from KNN import KNN
 
 
 # FUNCIONS ANÀLISI QUALITATIU
-def retrieval_by_color(images, color_labels, query_colors, color_percentages=None):
+def retrieval_by_color(images, query_colors, color_percentages=None):
+
+    """
+    Retorna totes les imatges que contenen les etiquetes de color especificades, ordenades pel percentatge de colors, de més a menys
+    Args:
+        centroids (numpy array): KxD 1st set of data points (usually centroid points)
+
+    Returns:
+        labels: list of K labels corresponding to one of the 11 basic colors
+        color_prob: list of K lists, each containing probabilities of the 11 colors sorted in descending order
+    """
+
     matching_images = []
     
     for idx, (img, labels) in enumerate(zip(images, color_labels)):
         # Comprovar si tots els colors de la consulta estan presents
-        if all(color in labels for color in query_colors):
+        if (color in labels for color in query_colors):
             if color_percentages is not None:
                 # Calcular la puntuació com la suma dels percentatges dels colors buscats
                 score = sum(color_percentages[idx].get(color, 0) for color in query_colors)
@@ -24,10 +35,41 @@ def retrieval_by_color(images, color_labels, query_colors, color_percentages=Non
             matching_images.append((img, score))
     
     # Ordenar per puntuació (de major a menor)
-    matching_images.sort(key=lambda x: x[1], reverse=True)
     
-    # Retornar només les imatges (sense les puntuacions)
-    return [img for img, score in matching_images]
+    return matching_images.sort(key=lambda x: x[1], reverse=True)
+
+
+
+# TEST
+def retrieval_by_color_test(K= 3):
+
+    # Inciaialitzar KMeans
+    km = KMeans(test_imgs, K, options={'km_init' : 'random', '100': 100})
+    # Executar algorisme
+    km.fit()
+
+    # Resultats
+    centroids = km.centroids
+    color_labels, color_probabilities = get_colors2(centroids)
+
+    # Prova funció retrieval_by_color
+        # Colors que volem buscar
+    query_colors = [color_labels[random.randint(0, len(color_labels)-1)]]
+    print(len(test_imgs))
+    matching_images = retrieval_by_color(test_imgs, query_colors[0], color_probabilities)
+
+    # Mostrar imatges coincidents
+    import matplotlib.pyplot as plt
+    plt.figure(figsize=(12, 8))
+    for i, img in enumerate(matching_images[:10]):  # Mostra les primeres 10 imatges coincidents
+        plt.subplot(2, 5, i + 1)
+        plt.imshow(img)
+        plt.axis('off')
+    plt.show()
+    return matching_images
+
+retrieval_by_color_test()
+
 
 # FUNCIONS ANÀLISI QUANTITATIU
 def kmean_statistics(kmeans, images, Kmax):
