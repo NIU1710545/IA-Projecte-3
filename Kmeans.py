@@ -254,5 +254,6 @@ def get_colors(centroids):
     
     # Convertir índexs a noms de colors
     color_labels = [utils.colors[i] for i in color_indices]
-    
-    return color_labels
+
+    return list(zip(color_labels, proba))
+
