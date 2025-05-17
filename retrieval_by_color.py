@@ -1,7 +1,7 @@
 
 
 from Kmeans import *
-from random import random, randint
+import random
 
 # FUNCIONS ANÀLISI QUALITATIU
 def retrieval_by_color(imatges, query_colors):
@@ -39,10 +39,11 @@ def retrieval_by_color_test(test, K = 3):
         imgatges.append([img, color_labels])
 
     # Tipus de porva (0 = Aleatori, 1 = Manual)
-    tipus = 0
+    tipus = input(f"Quin tipus de prova vols fer? (0 = Aleatori, 1 = Manual): ")
 
-    if tipus == 0:
-        query_colors = [utils.colors[random.randint(0, len(utils.colors)-1)]]
+    if tipus == '0':
+        num = int(input(f"Quants colors vols buscar?: "))
+        query_colors = [utils.colors[random.randint(0, len(utils.colors)-1)] for _ in range(num)]
     else:
         query_colors = ['red', 'green', 'blue']  # Colors a buscar
 
