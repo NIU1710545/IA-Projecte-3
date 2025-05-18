@@ -63,7 +63,7 @@ def menu():
 
         elif opcio == '4':
             get_shape_accuracy_test(train_imgs_grayscale, train_class_labels, test_imgs, test_class_labels, cropped_images)
-       elif opcio == '5':
+        elif opcio == '5':
             while True:
                 print("\n--- Submenú find_bestK ---")
                 print("1. find_bestK_function")
