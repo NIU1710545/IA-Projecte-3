@@ -50,4 +50,4 @@ def get_shape_accuracy_test(train_imgs_grayscale, train_class_labels, test_imgs,
         filtered_gts = [gt for gt in test_class_labels if gt == target_class]
 
         acc = get_shape_accuracy(filtered_preds, filtered_gts)
-        print(f"Precisió per la clase {target_class}: {acc:.2f}%")
+        print(f"Precisió per a la clase {target_class}: {acc:.2f}%")
