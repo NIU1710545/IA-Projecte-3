@@ -188,26 +188,61 @@ class KMeans:
                 wcd += np.sum(dist**2)
         self.wcd = wcd
         return wcd
+    
+    def interClassDistance(self):
+        distances = []
+        icd = 0.0
+        
+        # Calcular la distancia euclidiana entre cada par de centroides
+        for i in range(self.K):
+            for j in range(i + 1, self.K):
+                dist = np.linalg.norm(self.centroids[i] - self.centroids[j])
+                distances.append(dist)
+
+        # Retornar la distancia media entre centroides
+        if distances:
+            icd = np.mean(distances)
+            self.icd = icd
+        return icd
+    
+    def fisherCoefficient(self):
+        icd = self.interClassDistance()
+        wcd = self.withinClassDistance()
+        
+        if wcd == 0:
+            return 0.0
+        self.fc = icd / wcd
+        return icd / wcd
+        
 
     def find_bestK(self, max_K):
         """
         sets the best k analysing the results up to 'max_K' clusters
         """
-        wcd_values = []
+        heuristic_values = []
         
         for k in range(2, max_K + 1):
             self.K = k
             
             self.fit()
             
-            # Calcular WCD
-            self.withinClassDistance()
-            wcd_values.append(self.wcd)
+            if self.options['fitting'] == 'WCD':
+                # Calcular WCD
+                self.withinClassDistance()
+                heuristic_values.append(self.wcd)
+            elif self.options['fitting'] == 'ICD':
+                # Calcular ICD
+                self.interClassDistance()
+                heuristic_values.append(self.icd)
+            elif self.options['fitting'] == 'FC':
+                # Calcular FC
+                self.fisherCoefficient()
+                heuristic_values.append(self.fc)
         
             # Calcular percentatge de decrement
             decrement = []
             for i in range(0, len(wcd_values)):
-                decrement.append(100 * (wcd_values[i]) / wcd_values[i-1])
+                decrement.append(100 * (heuristic_values[i]) / heuristic_values[i-1])
             
             # Trobar la millor K
             best_K = max_K  # Valor per defecte
