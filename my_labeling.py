@@ -6,6 +6,8 @@ from KNN import KNN
 from Kmeans import *
 from retrieval_by_color import *
 from kmean_statistics import kmean_statistics
+from retrieval_by_shape import retrieval_by_shape_test
+from get_shape_accuracy import get_shape_accuracy_test
 
 
 # Cas normal 
@@ -27,32 +29,44 @@ if __name__ == '__main__':
 
 
 # Amb menú
-    def menu():
-        while True:
-            print("\n--- MENÚ D'AVALUACIÓ ---")
-            print("1. Retrieval per color")
-            print("2. Estadístiques KMeans")
-            print("0. Sortir")
-            opcio = input("Selecciona una opció: ")
 
-            if opcio == '1':
-                try:
-                    K = int(input("Introdueix el valor de2 K per KMeans (ex: 4): "))
-                except ValueError:
-                    print("Valor de K no vàlid.")
-                    continue
-                retrieval_by_color_test(test_imgs, K )
-            elif opcio == '2':
-                try:
-                    Kmax = int(input("Introdueix el valor màxim de K per a les estadístiques (ex: 10): "))
-                except ValueError:
-                    print("Valor de K màxim no vàlid.")
-                    continue
-                kmean_statistics(KMeans, train_imgs_grayscale, Kmax, 100)  
-            elif opcio == '0':
-                print("Sortint del menú.")
-                break
-            else:
-                print("Opció no vàlida. Torna-ho a intentar.")
+def menu():
+    while True:
+        print("\n--- MENÚ D'AVALUACIÓ ---")
+        print("1. Retrieval per color")
+        print("2. Estadístiques KMeans")
+        print("3. Retrieval per shape")
+        print("4. Get shape accuracy")
+        print("0. Sortir")
+        opcio = input("Selecciona una opció: ")
 
-    menu()
+        if opcio == '1':
+            try:
+                K = int(input("Introdueix el valor de K per KMeans (ex: 4): "))
+            except ValueError:
+                print("Valor de K no vàlid.")
+                continue
+            retrieval_by_color_test(test_imgs, K)
+
+        elif opcio == '2':
+            try:
+                Kmax = int(input("Introdueix el valor màxim de K per a les estadístiques (ex: 10): "))
+            except ValueError:
+                print("Valor de K màxim no vàlid.")
+                continue
+            kmean_statistics(KMeans, train_imgs_grayscale, Kmax, 100)
+
+        elif opcio == '3':
+            retrieval_by_shape_test(cropped_images, class_labels)
+
+        elif opcio == '4':
+            get_shape_accuracy_test(train_imgs_grayscale, train_class_labels, test_imgs, test_class_labels, cropped_images)
+
+        elif opcio == '0':
+            print("Sortint del menú.")
+            break
+
+        else:
+            print("Opció no vàlida. Torna-ho a intentar.")
+
+menu()
