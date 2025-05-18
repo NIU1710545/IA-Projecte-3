@@ -3,7 +3,9 @@ __group__ = 'Team_05'
 
 from utils_data import read_dataset, read_extended_dataset, crop_images
 from KNN import KNN
-
+from Kmeans import *
+from retrieval_by_color import *
+from kmean_statistics import kmean_statistics
 
 
 # Cas normal 
