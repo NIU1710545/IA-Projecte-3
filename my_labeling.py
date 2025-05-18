@@ -9,7 +9,7 @@ from kmean_statistics import kmean_statistics
 from retrieval_by_shape import retrieval_by_shape_test
 from get_shape_accuracy import get_shape_accuracy_test
 from find_bestK import find_bestK_function
-
+from silhouette_score import test_silhouette_scores
 
 # Cas normal 
 
