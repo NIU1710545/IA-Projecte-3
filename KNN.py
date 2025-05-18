@@ -50,12 +50,14 @@ class KNN:
         test_data = test_data.astype(np.float32)
         P, M, N = test_data.shape 
         self.test_data = test_data.reshape(P, M * N)
-
-        if self.distance_metric == 'euclidean':
-            distances = cdist(test_processed, self.train_data, 'euclidean')
-        else self.distance_metric == 'manhattan':
-            distances = cdist(test_processed, self.train_data, 'cityblock')
         
+        if self.distance_metric == 'euclidean':
+            distances = cdist(self.test_data, self.train_data, 'euclidean')
+        elif self.distance_metric == 'manhattan':
+            distances = cdist(self.test_data, self.train_data, 'cityblock')
+        elif self.distance_metric == 'cosine':
+            distances = cdist(self.test_data, self.train_data, 'cosine')
+
         knearest_indices = np.argsort(distances, axis=1)[:, :k]
 
         # Obtenir ETIQUETES dels veïns
