@@ -37,6 +37,7 @@ def menu():
         print("2. Estadístiques KMeans")
         print("3. Retrieval per shape")
         print("4. Get shape accuracy")
+        print("5. find_bestK")
         print("0. Sortir")
         opcio = input("Selecciona una opció: ")
 
@@ -61,6 +62,8 @@ def menu():
 
         elif opcio == '4':
             get_shape_accuracy_test(train_imgs_grayscale, train_class_labels, test_imgs, test_class_labels, cropped_images)
+        elif opcio == '5':
+            find_bestK_function(train_imgs_grayscale, max_K=10)
 
         elif opcio == '0':
             print("Sortint del menú.")
