@@ -63,8 +63,25 @@ def menu():
 
         elif opcio == '4':
             get_shape_accuracy_test(train_imgs_grayscale, train_class_labels, test_imgs, test_class_labels, cropped_images)
-        elif opcio == '5':
-            find_bestK_function(train_imgs_grayscale, max_K=10)
+       elif opcio == '5':
+            while True:
+                print("\n--- Submenú find_bestK ---")
+                print("1. find_bestK_function")
+                print("2. test_silhouette_scores")
+                print("0. Tornar al menú principal")
+                subopcio = input("Selecciona una opció: ")
+
+                if subopcio == '1':
+                    find_bestK_function(train_imgs_grayscale, max_K=10)
+                elif subopcio == '2':
+                    scores = test_silhouette_scores(train_imgs_grayscale, max_K=10)
+                    print("\nSilhouette Scores per K:")
+                    for k, score in scores.items():
+                        print(f"K={k}: {score}")
+                elif subopcio == '0':
+                    break
+                else:
+                    print("Opció no vàlida. Torna-ho a intentar.")
 
         elif opcio == '0':
             print("Sortint del menú.")
