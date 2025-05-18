@@ -51,9 +51,14 @@ class KNN:
         P, M, N = test_data.shape 
         self.test_data = test_data.reshape(P, M * N)
 
-        distances = cdist(self.test_data, self.train_data, metric='euclidean')
+        if self.distance_metric == 'euclidean':
+            distances = cdist(test_processed, self.train_data, 'euclidean')
+        else self.distance_metric == 'manhattan':
+            distances = cdist(test_processed, self.train_data, 'cityblock')
+        
         knearest_indices = np.argsort(distances, axis=1)[:, :k]
 
+        # Obtenir ETIQUETES dels veïns
         self.neighbors = self.labels[knearest_indices]
         
     
